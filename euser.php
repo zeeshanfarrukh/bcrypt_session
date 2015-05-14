@@ -6,7 +6,7 @@ session_start();
 <!DOCTYPE form PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Use Session to Customize the page as per user -->
 <p><h3>Secure Login</h3></p>
-<p> <?php echo "HOME OF:".$_SESSION['USER']?></p>
+<p> <?php !empty($_SESSION['USER'])? print("HOME OF:".$_SESSION['USER']):"" ?></p>
 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
 <div style="width: 40em;">
 <label for="userlogin" >Userlogin</label>
