@@ -1,22 +1,42 @@
 <?php
+//ini_set('display_errors', true);
 session_start();
 //require 'Check_Pwd.php';
 // if icluding file Check_pwd.php then send data to that file other wise use the current file
+require("HTML/QuickForm.php");
 ?>
 <!DOCTYPE form PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Use Session to Customize the page as per user -->
-<p><h3>Secure Login</h3></p>
-<p> <?php !empty($_SESSION['USER'])? print("HOME OF:".$_SESSION['USER']):"" ?></p>
-<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
-<div style="width: 40em;">
-<label for="userlogin" >Userlogin</label>
-<input type="text" name="userlogin" id="userlogin" value=""/>
-<label for="password" >Password</label>
-<input type="password" name="password" id="password" value=""/>
-<div style="clear: both;">
-<input type="submit" name="Enter" value="Enter">
-</div>
-</div>
-</form>
+<h3>Secure Login</h3>
+<?php 
+$form_l= new HTML_QuickForm("login","post",null,true);
+$form_l->addElement("text","userlogin","User Name");
+$pwd=$form_l->addElement("password","password","Password");
+$pwd->setValue("");
+$form_buttons=array();
+$form_buttons[]=HTML_QuickForm::createElement("submit","submitform","Send");
+$form_buttons[]=HTML_QuickForm::createElement("reset","resetform","Reset");
+$form_l->addGroup($form_buttons,null,null,"");
+if($form_l->isSubmitted() && apply_Rules($form_l) )
+{
+// after verfication assign session SID (SESSION ID and take user to its home page)
+	echo 'Redirecting to User Page';
+}
+	else
+	{
+		echo $form_l->toHTML();
+	}
+	
+	
+	function apply_Rules($form_l)
+	{
+		$form_l->addRule("userlogin","User Required","required");
+		$form_l->addRule("userlogin","Digits and Letters only","alphanumeric");
+		$form_l->addRule("password","Password Required","required");
+		$form_l->addRule("password","Digits and Letters only","alphanumeric");
+	}
+	
+?>`
+
 
 
