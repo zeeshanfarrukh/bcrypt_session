@@ -17,10 +17,13 @@ $form_buttons=array();
 $form_buttons[]=HTML_QuickForm::createElement("submit","submitform","Send");
 $form_buttons[]=HTML_QuickForm::createElement("reset","resetform","Reset");
 $form_l->addGroup($form_buttons,null,null,"");
-if($form_l->isSubmitted() && apply_Rules($form_l) )
+apply_Rules($form_l);
+if(($form_l->isSubmitted()) && ($form_l->validate())  )
 {
 // after verfication assign session SID (SESSION ID and take user to its home page)
+ //break;
 	echo 'Redirecting to User Page';
+  
 }
 	else
 	{
