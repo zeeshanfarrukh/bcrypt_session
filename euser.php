@@ -1,9 +1,18 @@
 <?php
 //ini_set('display_errors', true);
 session_start();
-//require 'Check_Pwd.php';
-// if icluding file Check_pwd.php then send data to that file other wise use the current file
+require 'check_auth.php';
+// if icluding file check_auth.php then send data to that file other wise use the current file
 require("HTML/QuickForm.php");
+
+if(isset($_POST['submitform']))
+{
+	$form_user=htmlentities($_POST['userlogin']);
+	$form_pwd=htmlentities($_POST['password']);
+	$auth=new check_auth($form_user,$form_pwd);
+	$auth->user_verizon();
+}
+
 ?>
 <!DOCTYPE form PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Use Session to Customize the page as per user -->

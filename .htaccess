@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteCond %{HTTPS} off
+#use your address below to make your website https
+RewriteRule ^(.*)$ https://http://localhost/bcrypt_session_login/$1 [R=301,L]
