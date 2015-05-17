@@ -24,6 +24,7 @@ if(($f_enter) && ($_SESSION['vForm']==="valid"))
 <?php 
 $form_l= new HTML_QuickForm("login","post",htmlspecialchars($_SERVER['PHP_SELF']),true);
 $form_l->addElement('header', null, 'Login Here');
+//$form_l->addElement( "image", "img_log", "Log_In.png", "style=width:75;height:75"  );
 $form_l->addElement("text","userlogin","User Name");
 $pwd=$form_l->addElement("password","password","Password");
 $pwd->setValue("");
@@ -38,6 +39,9 @@ if(($form_l->isSubmitted()) && ($form_l->validate())  )
  $_SESSION['vForm']="valid";
  !empty($s_user)?print "Your being rdirected to your home page" : 
   				 print "User ID and Password doesnot exist in system" ;
+ 
+ 
+ 
 }
 	else
 	{

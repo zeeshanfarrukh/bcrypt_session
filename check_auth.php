@@ -19,8 +19,6 @@ class check_auth{
 	$userList = simplexml_load_file( "db_file.xml", "SimpleXMLElement",LIBXML_NOCDATA );
 	$e_user=array();
 	
-	
-	
 	foreach($userList as $k => $data)
 	{
 		if($k=='name' || $k=='password')
@@ -32,7 +30,7 @@ class check_auth{
 				//if(password_verify($this->pwd, $data))
 				
 				// to test with PHP<=5.4 you can also you blowfish with this
-				if(crypt($this->pwd,CRYPT_SHA512)==$data)
+				if(crypt($this->pwd,CRYPT_BLOWFISH)==$data)
 				$e_user['pwd']="passwordOk";
 			}
 			else 
@@ -55,12 +53,20 @@ class check_auth{
 		//$hash_password=  password_hash($this->pwd, PASSWORD_DEFAULT);
 		
 		// for testing on php<5.5 use the below crypt with specific salt you can also you blowfish with this
+		$chk_user=array();
+		$chk_user= $this->user_verizon();
+		if(!empty($chk_user))
+		{
+		echo "user name already exists choose different";
+		return false;
+		}
 		
-		$hash_password= crypt($this->pwd,CRYPT_SHA512);
+		$hash_password= crypt($this->pwd,CRYPT_BLOWFISH);
 		$xml_user=simplexml_load_file("db_file.xml");
 		$xml_user->addChild("name",$this->uname);
 		$xml_user->addChild("password",$hash_password);
 		return $xml_user->asXML("db_file.xml");
+		
 			
 	}
 	
