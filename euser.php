@@ -22,7 +22,7 @@ if(($f_enter) && ($_SESSION['vForm']==="valid"))
 <!-- Use Session to Customize the page as per user -->
 <h3>Secure Login</h3>
 <?php 
-$form_l= new HTML_QuickForm("login","post",htmlspecialchars($_SERVER['PHP_SELF']),true);
+$form_l= new HTML_QuickForm("login","post",htmlspecialchars($_SERVER['PHP_SELF']),null);
 $form_l->addElement('header', null, 'Login Here');
 //$form_l->addElement( "image", "img_log", "Log_In.png", "style=width:75;height:75"  );
 $form_l->addElement("text","userlogin","User Name");
@@ -33,6 +33,7 @@ $form_buttons[]=HTML_QuickForm::createElement("submit","submitform","Send");
 $form_buttons[]=HTML_QuickForm::createElement("reset","resetform","Reset");
 $form_l->addGroup($form_buttons,null,null,"");
 apply_Rules($form_l);
+
 if(($form_l->isSubmitted()) && ($form_l->validate())  )
 {
  //add a session variable to $_SESSION after verfication

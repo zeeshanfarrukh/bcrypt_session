@@ -1,4 +1,6 @@
 <?php
+//declare any form relevant variables here
+$_SESSION['vForm']="";
 class check_auth{
 	
 	private $uname;

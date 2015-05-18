@@ -24,7 +24,7 @@ if(($f_enter) && ($_SESSION['vForm']==="valid"))
 <!-- Use Session to Customize the page as per user -->
 <h3>Register As New User</h3>
 <?php 
-$form_l= new HTML_QuickForm("login","post",htmlspecialchars($_SERVER['PHP_SELF']),true);
+$form_l= new HTML_QuickForm("addUser","post",htmlspecialchars($_SERVER['PHP_SELF']),true);
 $form_l->addElement('header', null, 'Select Your Use name and Password');
 $form_l->addElement("text","userlogin","User Name");
 $pwd=$form_l->addElement("password","password","Password");
