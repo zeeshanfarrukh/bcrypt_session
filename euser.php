@@ -5,18 +5,7 @@ require 'check_auth.php';
 // if icluding file check_auth.php then send data to that file other wise use the current file
 //Use HTML_QUICKFORM2 its the latest version
 require("HTML/QuickForm.php");
-//checking non emty fields before posting for authentication
-!empty($_POST['userlogin']) && !empty($_POST['password'])?$f_enter=true:$f_enter=false;
-
-if(($f_enter) && ($_SESSION['vForm'])==="valid")
-{
-	//break;
-	$form_user=htmlentities($_POST['userlogin']);
-	$form_pwd=htmlentities($_POST['password']);
-	$auth=new check_auth($form_user,$form_pwd);
-	$s_user=$auth->user_verizon();
-	unset($_SESSION['vForm']);
-}
+//checking non emty fields before posting for authentication in form validation
 ?>
 <!DOCTYPE form PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Use Session to Customize the page as per user -->
@@ -34,11 +23,13 @@ $form_buttons[]=HTML_QuickForm::createElement("reset","resetform","Reset");
 $form_l->addGroup($form_buttons,null,null,"");
 apply_Rules($form_l);
 
-
-
 if(($form_l->isSubmitted()) && ($form_l->validate())  )
 {
- //add a session variable to $_SESSION after verfication
+$form_user=htmlentities($_POST['userlogin']);
+$form_pwd=htmlentities($_POST['password']);
+$auth=new check_auth($form_user,$form_pwd);
+$s_user=$auth->user_verizon();
+	
 !empty($s_user)?print "Your being rdirected to your home page" : 
   				 print "User ID and Password doesnot exist in system" ;
  
@@ -56,8 +47,7 @@ if(($form_l->isSubmitted()) && ($form_l->validate())  )
 		$form_l->addRule("userlogin","Digits and Letters only","alphanumeric");
 		$form_l->addRule("password","Password Required","required");
 		$form_l->addRule("password","Digits and Letters only","alphanumeric");
-		//session variable asigned after validation check ,, i will commit that
-		empty($_SESSION['vForm'])?$_SESSION['vForm']="valid":$_SESSION['vForm'];
+		
 	}
 	
 ?>
