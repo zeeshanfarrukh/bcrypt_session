@@ -8,7 +8,7 @@ require("HTML/QuickForm.php");
 //checking non emty fields before posting for authentication
 !empty($_POST['userlogin']) && !empty($_POST['password'])?$f_enter=true:$f_enter=false;
 
-if(($f_enter) && ($_SESSION['vForm']==="valid"))
+if(($f_enter) && ($_SESSION['vForm'])==="valid")
 {
 	//break;
 	$form_user=htmlentities($_POST['userlogin']);
@@ -22,7 +22,7 @@ if(($f_enter) && ($_SESSION['vForm']==="valid"))
 <!-- Use Session to Customize the page as per user -->
 <h3>Secure Login</h3>
 <?php 
-$form_l= new HTML_QuickForm("login","post",htmlspecialchars($_SERVER['PHP_SELF']),null);
+$form_l= new HTML_QuickForm("login_form","post",htmlspecialchars($_SERVER['PHP_SELF']),null);
 $form_l->addElement('header', null, 'Login Here');
 //$form_l->addElement( "image", "img_log", "Log_In.png", "style=width:75;height:75"  );
 $form_l->addElement("text","userlogin","User Name");
@@ -34,14 +34,13 @@ $form_buttons[]=HTML_QuickForm::createElement("reset","resetform","Reset");
 $form_l->addGroup($form_buttons,null,null,"");
 apply_Rules($form_l);
 
+
+
 if(($form_l->isSubmitted()) && ($form_l->validate())  )
 {
  //add a session variable to $_SESSION after verfication
- $_SESSION['vForm']="valid";
- !empty($s_user)?print "Your being rdirected to your home page" : 
+!empty($s_user)?print "Your being rdirected to your home page" : 
   				 print "User ID and Password doesnot exist in system" ;
- 
- 
  
 }
 	else
@@ -57,6 +56,8 @@ if(($form_l->isSubmitted()) && ($form_l->validate())  )
 		$form_l->addRule("userlogin","Digits and Letters only","alphanumeric");
 		$form_l->addRule("password","Password Required","required");
 		$form_l->addRule("password","Digits and Letters only","alphanumeric");
+		//session variable asigned after validation check ,, i will commit that
+		empty($_SESSION['vForm'])?$_SESSION['vForm']="valid":$_SESSION['vForm'];
 	}
 	
 ?>

@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', true);
+//ini_set('display_errors', true);
 session_start();
 require 'check_auth.php';
 require("HTML/QuickForm.php");
@@ -7,15 +7,13 @@ require_once 'show_users.php';
 //This Form is for Registering New User
 //checking non emty fields before posting for authentication
 !empty($_POST['userlogin']) && !empty($_POST['password'])?$f_enter=true:$f_enter=false;
-if(($f_enter) && ($_SESSION['vForm']==="valid"))
+if(($f_enter) && ($_SESSION['vForm'])==="valid")
 {
 	//break;
 	$form_user=htmlentities($_POST['userlogin']);
 	$form_pwd=htmlentities($_POST['password']);
 	$auth=new check_auth($form_user,$form_pwd);
 	$s_user=$auth->user_newzone();
-	
-	// to show all user
 	$sh_user=new show_user();
 	unset($_SESSION['vForm']);
 }
@@ -24,7 +22,7 @@ if(($f_enter) && ($_SESSION['vForm']==="valid"))
 <!-- Use Session to Customize the page as per user -->
 <h3>Register As New User</h3>
 <?php 
-$form_l= new HTML_QuickForm("addUser","post",htmlspecialchars($_SERVER['PHP_SELF']),true);
+$form_l= new HTML_QuickForm("addUser","post",htmlspecialchars($_SERVER['PHP_SELF']),null);
 $form_l->addElement('header', null, 'Select Your Use name and Password');
 $form_l->addElement("text","userlogin","User Name");
 $pwd=$form_l->addElement("password","password","Password");
@@ -37,10 +35,10 @@ apply_Rules($form_l);
 if(($form_l->isSubmitted()) && ($form_l->validate())  )
 {
  //add a session variable to $_SESSION after verfication
- $_SESSION['vForm']="valid";
  !empty($s_user)?print "Registration successful" : 
   				 print "User ID already exist in system" ;
  
+ // to show all user
  $sh_user->show_all_users();
  
 }
@@ -57,6 +55,8 @@ if(($form_l->isSubmitted()) && ($form_l->validate())  )
 		$form_l->addRule("userlogin","Digits and Letters only","alphanumeric");
 		$form_l->addRule("password","Password Required","required");
 		$form_l->addRule("password","Digits and Letters only","alphanumeric");
+		//session variable asigned after validation check ,, i will commit that
+		empty($_SESSION['vForm'])?$_SESSION['vForm']="valid":$_SESSION['vForm'];
 	}
 	
 ?>
